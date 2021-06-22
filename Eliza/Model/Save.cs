@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Eliza.Model.SaveData;
 
 namespace Eliza.Model
 {
-    class Save
+    public class Save
     {
         public SaveDataHeader header;
-        public SaveData saveData;
-        public SaveDataFooter footer;
+        public RF5SaveData saveData;
+        //private SaveDataFooter footer;
     }
 }

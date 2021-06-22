@@ -5,7 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dependencies\Bin2Object\Bin2Object\Bin2Object.csproj" />
+    <PackageReference Include="BouncyCastle.NetCore" Version="1.8.8" />
+    <PackageReference Include="MessagePack" Version="2.2.85" />
+    <PackageReference Include="MessagePack.UnityShims" Version="2.2.85" />
+    <PackageReference Include="MessagePackAnalyzer" Version="2.2.85" />
   </ItemGroup>
 
 </Project>

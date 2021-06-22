@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Eliza.Model
+﻿namespace Eliza.Model
 {
-    class SaveFlagStorage
+    public class SaveFlagStorage
     {
-        private byte[] <Data>k__BackingField;
-	    private int <Length>k__BackingField;
+        public int Length;
+        public byte[] Data;
+
+        //public int Length { get; set; }
+        //public byte[] Data { get; set; }
+
+        public SaveFlagStorage(byte[] data, int length)
+        {
+            Data = data;
+            Length = length;
+        }
     }
 }
