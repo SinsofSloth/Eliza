@@ -24,9 +24,5 @@
         public RF5ShippingData shippingData;
         public RF5LpocketData lpocketData;
         public RF5NameData nameData;
-        private byte[] unmapped;
-
-        public byte[] Unmapped { get => unmapped; set => unmapped = value; }
-
     }
 }

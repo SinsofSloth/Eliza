@@ -1,13 +1,9 @@
 ﻿using Eliza.Model;
 using MessagePack;
 using MessagePack.Formatters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Eliza
+namespace Eliza.Core.Serialization.MessagePackFormatters
 {
     class HumanStatusDataFormatter : IMessagePackFormatter<HumanStatusData>
     {

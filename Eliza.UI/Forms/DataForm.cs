@@ -6,11 +6,11 @@ namespace Eliza.UI.Forms
 {
     public class DataForm : Form
     {
-        private Model.Save _saveFile;
+        private Model.SaveData.SaveData _saveData;
 
-        public DataForm(Model.Save save)
+        public DataForm(Model.SaveData.SaveData save)
         {
-            _saveFile = save;
+            _saveData = save;
 
             Title = "Data";
 
@@ -201,25 +201,25 @@ namespace Eliza.UI.Forms
 
         private void SaveFlagButton_Click(object sender, EventArgs e)
         {
-            var saveFlagForm = new SaveFlagForm(_saveFile.saveData.saveFlag);
+            var saveFlagForm = new SaveFlagForm(_saveData.saveData.saveFlag);
             saveFlagForm.Show();
         }
 
         private void WorldDataButton_Click(object sender, EventArgs e)
         {
-            var worldDataForm = new WorldDataForm(_saveFile.saveData.worldData);
+            var worldDataForm = new WorldDataForm(_saveData.saveData.worldData);
             worldDataForm.Show();
         }
 
         private void PlayerDataButton_Click(object sender, EventArgs e)
         {
-            var playerDataForm = new PlayerDataForm(_saveFile.saveData.playerData);
+            var playerDataForm = new PlayerDataForm(_saveData.saveData.playerData);
             playerDataForm.Show();
         }
 
         private void EventDataButton_Click(object sender, EventArgs e)
         {
-            var eventDataForm = new EventDataForm(_saveFile.saveData.eventData);
+            var eventDataForm = new EventDataForm(_saveData.saveData.eventData);
             eventDataForm.Show();
         }
 

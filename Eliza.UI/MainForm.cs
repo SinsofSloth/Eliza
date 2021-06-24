@@ -9,7 +9,7 @@ namespace Eliza
 {
     public partial class MainForm : Form
     {
-        private Model.Save _saveFile;
+        private Model.SaveData.SaveData _saveData;
         private string _path;
 
         public MainForm()
@@ -79,16 +79,19 @@ namespace Eliza
                     if (openFileDialog.ShowDialog(Parent) == DialogResult.Ok)
                     {
                         _path = openFileDialog.FileName;
-                        _saveFile = Save.Read(_path);
 
+                        try
+                        {
+                            _saveData = Model.SaveData.SaveData.Read(_path);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Error: Incompatible/invalid save file found. Please report the issue on Github.");
+                        }
+                        
                         headerButton.Enabled = true;
                         data.Enabled = true;
                         footer.Enabled = true;
-
-                    }
-                    else
-                    {
-                        MessageBox.Show($"It seems v1.0.{_saveFile.header.version} does not seem to be supported at the moment, or your save file is invalid.");
                     }
                 }
             }
@@ -104,20 +107,20 @@ namespace Eliza
                     if (saveFileDialog.ShowDialog(Parent) == DialogResult.Ok)
                     {
                         var path = saveFileDialog.FileName;
-                        Save.Write(path, _saveFile);
+                        Model.SaveData.SaveData.Write(path, _saveData);
                     }
                 }
             }
 
             void HeaderButton_Click(object sender, EventArgs e)
             {
-                var headerForm = new HeaderForm(_saveFile);
+                var headerForm = new HeaderForm(_saveData);
                 headerForm.Show();
             }
 
             void DataButton_Click(object sender, EventArgs e)
             {
-                var dataForm = new DataForm(_saveFile);
+                var dataForm = new DataForm(_saveData);
                 dataForm.Show();
             }
 

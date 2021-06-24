@@ -113,14 +113,14 @@ namespace Eliza.UI.Forms
                     var startTimeList = new ListBox();
                     var startTimeData = new VBox();
 
-                    if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                    if (
+                        eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                        eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime != null
+                    )
                     {
-                        if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime != null)
+                        for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime.Length; i++)
                         {
-                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime.Length; i++)
-                            {       
-                                startTimeList.Items.Add($"Start Time {i}");
-                            }
+                            startTimeList.Items.Add($"Start Time {i}");
                         }
                     }
 
@@ -176,14 +176,14 @@ namespace Eliza.UI.Forms
                         timezone.numericStepper.Enabled = false;
                         weather.numericStepper.Enabled = false;
 
-                        if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                        if (
+                            eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime != null
+                        )
                         {
-                            if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime != null)
+                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime.Length; i++)
                             {
-                                for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime.Length; i++)
-                                {
-                                    startTimeList.Items.Add($"Start Time {i}");
-                                }
+                                startTimeList.Items.Add($"Start Time {i}");
                             }
                         }
                     };
@@ -232,14 +232,14 @@ namespace Eliza.UI.Forms
                     var endTimeList = new ListBox();
                     var endTimeData = new VBox();
 
-                    if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                    if (
+                        eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                        eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime != null
+                    )
                     {
-                        if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime != null)
+                        for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime.Length; i++)
                         {
-                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime.Length; i++)
-                            {
-                                endTimeList.Items.Add($"End Time {i}");
-                            }
+                            endTimeList.Items.Add($"End Time {i}");
                         }
                     }
 
@@ -295,14 +295,14 @@ namespace Eliza.UI.Forms
                         timezone.numericStepper.Enabled = false;
                         weather.numericStepper.Enabled = false;
 
-                        if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                        if (
+                            eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].EndTime != null
+                        )
                         {
-                            if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].EndTime != null)
+                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].EndTime.Length; i++)
                             {
-                                for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].EndTime.Length; i++)
-                                {
-                                    endTimeList.Items.Add($"End Time {i}");
-                                }
+                                endTimeList.Items.Add($"End Time {i}");
                             }
                         }
                     };
@@ -355,14 +355,14 @@ namespace Eliza.UI.Forms
                     var joinNpcsList = new ListBox();
                     var joinNpcsData = new VBox();
 
-                    if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                    if (
+                        eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                        eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs != null
+                    )
                     {
-                        if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs != null)
+                        for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs.Length; i++)
                         {
-                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs.Length; i++)
-                            {
-                                joinNpcsList.Items.Add($"Join NPC {i}");
-                            }
+                            joinNpcsList.Items.Add($"Join NPC {i}");
                         }
                     }
 
@@ -373,20 +373,16 @@ namespace Eliza.UI.Forms
                         var dataVBox = new VBox();
                         var dataList = new ListBox();
 
-                        if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                        if (
+                            eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs != null &&
+                            joinNpcsList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs.Length && joinNpcsList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs[joinNpcsList.SelectedIndex].datas != null
+                        )
                         {
-                            if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs != null)
+                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs[joinNpcsList.SelectedIndex].datas.Length; i++)
                             {
-                                if (joinNpcsList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs.Length && joinNpcsList.SelectedIndex >= 0)
-                                {
-                                    if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs[joinNpcsList.SelectedIndex].datas != null)
-                                    {
-                                        for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs[joinNpcsList.SelectedIndex].datas.Length; i++)
-                                        {
-                                            dataList.Items.Add($"Data {i}");
-                                        }
-                                    }
-                                }
+                                dataList.Items.Add($"Data {i}");
                             }
                         }
 
@@ -402,20 +398,16 @@ namespace Eliza.UI.Forms
                         {
                             dataList.Items.Clear();
                             data.Enabled = false;
-                            if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                            if (
+                                eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                                eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs != null &&
+                                joinNpcsList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs.Length && joinNpcsList.SelectedIndex >= 0 &&
+                                eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs[joinNpcsList.SelectedIndex].datas != null
+                            )
                             {
-                                if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs != null)
+                                for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs[joinNpcsList.SelectedIndex].datas.Length; i++)
                                 {
-                                    if (joinNpcsList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs.Length && joinNpcsList.SelectedIndex >= 0)
-                                    {
-                                        if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs[joinNpcsList.SelectedIndex].datas != null)
-                                        {
-                                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs[joinNpcsList.SelectedIndex].datas.Length; i++)
-                                            {
-                                                dataList.Items.Add($"Data {i}");
-                                            }
-                                        }
-                                    }
+                                    dataList.Items.Add($"Data {i}");
                                 }
                             }
                         };
@@ -434,14 +426,14 @@ namespace Eliza.UI.Forms
                     joinNpcsUpdate = delegate ()
                     {
                         joinNpcsList.Items.Clear();
-                        if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                        if (
+                            eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs != null
+                        )
                         {
-                            if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs != null)
+                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs.Length; i++)
                             {
-                                for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinNpcs.Length; i++)
-                                {
-                                    joinNpcsList.Items.Add($"Join NPC {i}");
-                                }
+                                joinNpcsList.Items.Add($"Join NPC {i}");
                             }
                         }
                         dataUpdate();
@@ -468,14 +460,14 @@ namespace Eliza.UI.Forms
                     var joinRateNpcsList = new ListBox();
                     var joinRateNpcsData = new VBox();
 
-                    if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                    if (
+                        eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                        eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null
+                    )
                     {
-                        if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null)
+                        for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs.Length; i++)
                         {
-                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs.Length; i++)
-                            {
-                                joinRateNpcsList.Items.Add($"Join NPC {i}");
-                            }
+                            joinRateNpcsList.Items.Add($"Join NPC {i}");
                         }
                     }
 
@@ -486,20 +478,16 @@ namespace Eliza.UI.Forms
                         var dataVBox = new VBox();
                         var dataList = new ListBox();
 
-                        if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                        if (
+                            eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null &&
+                            joinRateNpcsList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs.Length && joinRateNpcsList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs[joinRateNpcsList.SelectedIndex].datas != null
+                        )
                         {
-                            if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null)
+                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs[joinRateNpcsList.SelectedIndex].datas.Length; i++)
                             {
-                                if (joinRateNpcsList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs.Length && joinRateNpcsList.SelectedIndex >= 0)
-                                {
-                                    if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs[joinRateNpcsList.SelectedIndex].datas != null)
-                                    {
-                                        for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs[joinRateNpcsList.SelectedIndex].datas.Length; i++)
-                                        {
-                                            dataList.Items.Add($"Data {i}");
-                                        }
-                                    }
-                                }
+                                dataList.Items.Add($"Data {i}");
                             }
                         }
 
@@ -515,20 +503,16 @@ namespace Eliza.UI.Forms
                         {
                             dataList.Items.Clear();
                             data.Enabled = false;
-                            if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                            if (
+                                eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                                eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null &&
+                                joinRateNpcsList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs.Length && joinRateNpcsList.SelectedIndex >= 0 &&
+                                eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs[joinRateNpcsList.SelectedIndex].datas != null
+                            )
                             {
-                                if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null)
+                                for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs[joinRateNpcsList.SelectedIndex].datas.Length; i++)
                                 {
-                                    if (joinRateNpcsList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs.Length && joinRateNpcsList.SelectedIndex >= 0)
-                                    {
-                                        if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs[joinRateNpcsList.SelectedIndex].datas != null)
-                                        {
-                                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs[joinRateNpcsList.SelectedIndex].datas.Length; i++)
-                                            {
-                                                dataList.Items.Add($"Data {i}");
-                                            }
-                                        }
-                                    }
+                                    dataList.Items.Add($"Data {i}");
                                 }
                             }
                         };
@@ -547,14 +531,14 @@ namespace Eliza.UI.Forms
                     joinRateNpcsUpdate = delegate ()
                     {
                         joinRateNpcsList.Items.Clear();
-                        if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                        if (
+                            eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null
+                        )
                         {
-                            if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null)
+                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs.Length; i++)
                             {
-                                for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs.Length; i++)
-                                {
-                                    joinRateNpcsList.Items.Add($"Join Rate NPC {i}");
-                                }
+                                joinRateNpcsList.Items.Add($"Join Rate NPC {i}");
                             }
                         }
                         dataUpdate();
@@ -581,14 +565,14 @@ namespace Eliza.UI.Forms
                     var decideJoinNpcsDataList = new ListBox();
                     var decideJoinNpcsDataData = new VBox();
 
-                    if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                    if (
+                        eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                        eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null
+                        )
                     {
-                        if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null)
+                        for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].DecideJoinNpcs.Count; i++)
                         {
-                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].DecideJoinNpcs.Count; i++)
-                            {
-                                decideJoinNpcsDataList.Items.Add($"Decide Join NPCs {i}");
-                            }
+                            decideJoinNpcsDataList.Items.Add($"Decide Join NPCs {i}");
                         }
                     }
 
@@ -603,14 +587,14 @@ namespace Eliza.UI.Forms
                     {
                         decideJoinNpcsDataList.Items.Clear();
                         decideJoinNpcsDataSpinBox.Enabled = false;
-                        if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                        if (
+                            eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null
+                        )
                         {
-                            if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null)
+                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].DecideJoinNpcs.Count; i++)
                             {
-                                for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].DecideJoinNpcs.Count; i++)
-                                {
-                                    decideJoinNpcsDataList.Items.Add($"Decide Join NPCs {i}");
-                                }
+                                decideJoinNpcsDataList.Items.Add($"Decide Join NPCs {i}");
                             }
                         }
                     };
@@ -651,14 +635,14 @@ namespace Eliza.UI.Forms
                     var npcScoreResultsDataList = new ListBox();
                     var npcScoreResultsDataData = new VBox();
 
-                    if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                    if (
+                            eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null
+                        )
                     {
-                        if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null)
+                        for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcScoreResults.Count; i++)
                         {
-                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcScoreResults.Count; i++)
-                            {
-                                npcScoreResultsDataList.Items.Add($"NPC Score Results {i}");
-                            }
+                            npcScoreResultsDataList.Items.Add($"NPC Score Results {i}");
                         }
                     }
 
@@ -673,14 +657,14 @@ namespace Eliza.UI.Forms
                     {
                         npcScoreResultsDataList.Items.Clear();
                         npcScoreResultsDataSpinBox.Enabled = false;
-                        if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                        if (
+                            eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null
+                        )
                         {
-                            if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].JoinRateNpcs != null)
+                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcScoreResults.Count; i++)
                             {
-                                for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcScoreResults.Count; i++)
-                                {
-                                    npcScoreResultsDataList.Items.Add($"NPC Score Results {i}");
-                                }
+                                npcScoreResultsDataList.Items.Add($"NPC Score Results {i}");
                             }
                         }
                     };
@@ -721,14 +705,14 @@ namespace Eliza.UI.Forms
                     var npcEventDatasList = new ListBox();
                     var npcEventDatasData = new VBox();
 
-                    if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                    if (
+                        eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                        eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime != null
+                    )
                     {
-                        if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].StartTime != null)
+                        for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas.Length; i++)
                         {
-                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas.Length; i++)
-                            {
-                                npcEventDatasList.Items.Add($"NPC Event Data {i}");
-                            }
+                            npcEventDatasList.Items.Add($"NPC Event Data {i}");
                         }
                     }
 
@@ -753,20 +737,16 @@ namespace Eliza.UI.Forms
                         var subEventStepsList = new ListBox();
                         var subEventStepsData = new VBox();
 
-                        if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                        if (
+                            eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas != null &&
+                            npcEventDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas.Length && npcEventDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas[npcEventDatasList.SelectedIndex].SubEventSteps != null
+                            )
                         {
-                            if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas != null)
+                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas[npcEventDatasList.SelectedIndex].SubEventSteps.Count; i++)
                             {
-                                if (npcEventDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas.Length && npcEventDatasList.SelectedIndex >= 0)
-                                {
-                                    if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas[npcEventDatasList.SelectedIndex].SubEventSteps != null)
-                                    {
-                                        for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas[npcEventDatasList.SelectedIndex].SubEventSteps.Count; i++)
-                                        {
-                                            subEventStepsList.Items.Add($"Sub Event Step {i}");
-                                        }
-                                    }
-                                }
+                                subEventStepsList.Items.Add($"Sub Event Step {i}");
                             }
                         }
 
@@ -821,14 +801,14 @@ namespace Eliza.UI.Forms
                         currentNpcEventPath.textBox.Enabled = false;
                         currentTargetEventStep.numericStepper.Enabled = false;
 
-                        if (eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0)
+                        if (
+                            eventScheduleDatasList.SelectedIndex < eventData.EventSaveParameter.EventScheduleDatas.Length && eventScheduleDatasList.SelectedIndex >= 0 &&
+                            eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas != null
+                        )
                         {
-                            if (eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas != null)
+                            for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas.Length; i++)
                             {
-                                for (int i = 0; i < eventData.EventSaveParameter.EventScheduleDatas[eventScheduleDatasList.SelectedIndex].NpcEventDatas.Length; i++)
-                                {
-                                    npcEventDatasList.Items.Add($"NPC Event Data {i}");
-                                }
+                                npcEventDatasList.Items.Add($"NPC Event Data {i}");
                             }
                         }
                     };

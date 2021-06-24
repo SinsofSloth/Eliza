@@ -43,6 +43,10 @@ namespace Eliza.Core.Serialization
             {
                 return ReadSaveFlagStorage();
             }
+            else if (type == typeof(Model.SaveData.SaveDataFooter))
+            {
+                return ReadSaveDataFooter(type);
+            }
             else if (IsDictionary(type))
             {
                 return ReadDictionary(type);
@@ -198,6 +202,13 @@ namespace Eliza.Core.Serialization
             } while (flag);
 
             return new SaveFlagStorage(data.ToArray(), length);
+        }
+
+        private Model.SaveData.SaveDataFooter ReadSaveDataFooter(Type type)
+        {
+            //Aligned relative to data 256 bytes due to Rijndael crypto
+            BaseStream.Position = ((BaseStream.Position - 0x20 + 0xFF) & ~0xFF) + 0x20;
+            return (Model.SaveData.SaveDataFooter)ReadObject(type);
         }
 
         private IDictionary ReadDictionary(Type type)

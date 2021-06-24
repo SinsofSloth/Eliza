@@ -1,4 +1,5 @@
-﻿using MessagePack;
+﻿using Eliza.Core.Serialization.MessagePackFormatters;
+using MessagePack;
 
 namespace Eliza.Model
 {

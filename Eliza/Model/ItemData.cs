@@ -10,7 +10,7 @@ namespace Eliza.Model
     [Union(5, typeof(FishItemData))]
     [Union(6, typeof(PotToolItemData))]
     [MessagePackObject]
-	[MessagePackFormatter(typeof(ItemDataFormatter))]
+	//[MessagePackFormatter(typeof(ItemDataFormatter))]
 	public abstract class ItemData
 	{
 		[Key(0)]

@@ -3,6 +3,7 @@ using MessagePack;
 using System;
 using System.Buffers;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -44,6 +45,10 @@ namespace Eliza.Core.Serialization
             else if (type == typeof(SaveFlagStorage))
             {
                 WriteSaveFlagStorage((SaveFlagStorage)value);
+            }
+            else if (type == typeof(Model.SaveData.SaveDataFooter))
+            {
+                WriteSavaDataFooter((Model.SaveData.SaveDataFooter)value);
             }
             else if (IsDictionary(type))
             {
@@ -105,36 +110,7 @@ namespace Eliza.Core.Serialization
                     WriteValue(value);
                 }
             }
-            ////For serializing, this will be the same as if it was equ to 0
-            //if (max != 0)
-            //{
-            //    foreach (object value in list)
-            //    {
-            //        This shouldn't be typically used, but I'll still add
-            //        if (isMessagePackList)
-            //        {
-            //            WriteMessagePackObject(value);
-            //        }
-            //        else
-            //        {
-            //            WriteValue(value);
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    foreach (object value in list)
-            //    {
-            //        if (isMessagePackList)
-            //        {
-            //            WriteMessagePackObject(value);
-            //        }
-            //        else
-            //        {
-            //            WriteValue(value);
-            //        }
-            //    }
-            //}
+            //The only instance of the use of max, doesn't seem to have an affect regardless of the length is (i.e. FurnitureData)
         }
 
         private void WriteString(string value, int max = 0)
@@ -176,6 +152,39 @@ namespace Eliza.Core.Serialization
         {
             Writer.Write(saveFlagStorage.Length);
             Writer.Write(saveFlagStorage.Data);
+        }
+
+        private void WriteSavaDataFooter(Model.SaveData.SaveDataFooter footer)
+        {
+            using (var reader = new BinaryReader(BaseStream))
+            {
+                var bodyLength = BaseStream.Length;
+                //Aligned relative to data 256 bytes due to Rijndael crypto
+                var paddedSize = (int)((BaseStream.Position - 0x20 + 0xFF) & ~0xFF) + 0x20;
+                BaseStream.SetLength(paddedSize);
+
+                BaseStream.Position = 0x0;
+                var headerSize = 0x20;
+                var header = reader.ReadBytes(headerSize);
+
+                var data = reader.ReadBytes(paddedSize - headerSize);
+
+                var encryptedData = Cryptography.Encrypt(data);
+
+                //Overwrite save data with encrypted data
+                BaseStream.Position = headerSize;
+                Writer.Write(encryptedData);
+
+                var bodyData = new List<byte>();
+                bodyData.AddRange(header);
+                bodyData.AddRange(encryptedData);
+                var checksum = Cryptography.Checksum(bodyData.ToArray());
+
+                Writer.Write((int)bodyLength);
+                Writer.Write(paddedSize);
+                Writer.Write(checksum);
+                Writer.Write((int)0x0);
+            }
         }
 
         private void WriteDictionary(IDictionary dictionary)

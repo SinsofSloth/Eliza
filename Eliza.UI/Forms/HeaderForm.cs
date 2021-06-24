@@ -5,7 +5,7 @@ namespace Eliza.UI.Forms
 {
     class HeaderForm : Form
     {
-        public HeaderForm(Model.Save save)
+        public HeaderForm(Model.SaveData.SaveData save)
         {
             Title = "Header";
 

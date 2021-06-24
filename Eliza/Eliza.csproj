@@ -11,4 +11,8 @@
     <PackageReference Include="MessagePackAnalyzer" Version="2.2.85" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Model\EventData\" />
+  </ItemGroup>
+
 </Project>

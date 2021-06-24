@@ -3,7 +3,7 @@ using MessagePack;
 using MessagePack.Formatters;
 using System.Text;
 
-namespace Eliza
+namespace Eliza.Core.Serialization.MessagePackFormatters
 {
     class FriendMonsterStatusDataFormatter : IMessagePackFormatter<FriendMonsterStatusData>
     {

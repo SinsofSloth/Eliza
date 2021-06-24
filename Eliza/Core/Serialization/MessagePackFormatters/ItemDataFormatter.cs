@@ -3,7 +3,7 @@ using MessagePack;
 using MessagePack.Formatters;
 using System.Collections.Generic;
 
-namespace Eliza
+namespace Eliza.Core.Serialization.MessagePackFormatters
 {
     public class ItemDataFormatter : IMessagePackFormatter<ItemData>
     {

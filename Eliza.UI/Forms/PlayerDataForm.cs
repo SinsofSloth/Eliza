@@ -2,8 +2,10 @@
 using Eliza.UI.Widgets;
 using Eto.Drawing;
 using Eto.Forms;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Eliza.UI.Forms
@@ -71,9 +73,15 @@ namespace Eliza.UI.Forms
                 var expSpinBox = new SpinBox("Exp");
                 var levelSpinBox = new SpinBox("Level");
 
+                var dict = new Dictionary<string, dynamic>();
+                using (StreamReader fs = File.OpenText("Resources/Data/SkillData.json"))
+                {
+                    dict = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(fs.ReadToEnd());
+                }
+
                 for (int i = 0; i < playerData.SkillDatas.Length; i++)
                 {
-                    skillDataList.Items.Add($"Skill {i}");
+                    skillDataList.Items.Add((string)dict["Skill"][i]["English"]);
                 }
 
                 skillDataList.SelectedIndexChanged += (object sender, EventArgs e) =>
@@ -81,7 +89,6 @@ namespace Eliza.UI.Forms
                     expSpinBox.ChangeReferenceValue(new Ref<int>(() => playerData.SkillDatas[skillDataList.SelectedIndex].Exp, v => { playerData.SkillDatas[skillDataList.SelectedIndex].Exp = v; }));
                     levelSpinBox.ChangeReferenceValue(new Ref<int>(() => playerData.SkillDatas[skillDataList.SelectedIndex].Level, v => { playerData.SkillDatas[skillDataList.SelectedIndex].Level = v; }));
                 };
-
 
                 StackLayoutItem[] skillDataDataItems =
                 {
