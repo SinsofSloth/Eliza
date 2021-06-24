@@ -3,7 +3,8 @@
 namespace Eliza.Model
 {
     [MessagePackObject]
-	public class FriendMonsterStatusData : StatusDataBase
+    [MessagePackFormatter(typeof(FriendMonsterStatusDataFormatter))]
+    public class FriendMonsterStatusData : StatusDataBase
 	{
         [Key(16)]
         public uint DataID;

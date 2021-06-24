@@ -3,6 +3,7 @@
 namespace Eliza.Model
 {
     [MessagePackObject]
+    [MessagePackFormatter(typeof(HumanStatusDataFormatter))]
     public class HumanStatusData : StatusDataBase
 	{
         [Key(16)]

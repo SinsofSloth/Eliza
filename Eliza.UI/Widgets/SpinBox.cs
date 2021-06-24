@@ -102,12 +102,14 @@ namespace Eliza.UI.Widgets
         {
             Items.Add(numericStepper);
             numericStepper.ValueChanged += OnValueChanged;
+            numericStepper.Width = 100;
         }
 
         private void Setup()
         {
             Items.Add(numericStepper);
             numericStepper.ValueChanged += OnValueChanged;
+            numericStepper.Width = 100;
             SetValue();
         }
 

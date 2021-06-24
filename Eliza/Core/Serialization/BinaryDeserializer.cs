@@ -51,7 +51,6 @@ namespace Eliza.Core.Serialization
             {
                 return ReadObject(type);
             }
-            return null;
         }
 
         private object ReadPrimitive(TypeCode type)
@@ -81,6 +80,7 @@ namespace Eliza.Core.Serialization
 
             length = length == 0 ? Convert.ToInt32(ReadPrimitive(lengthType)) : length;
 
+            // Overrides length
             if (max != 0)
             {
                 if (type.IsArray)
@@ -215,6 +215,10 @@ namespace Eliza.Core.Serialization
 
             for (int index = 0; index < length; index++)
             {
+                if (valueType == typeof(HumanStatusData))
+                {
+
+                }
                 var keyValue = ReadValue(keyType);
                 var valueValue = ReadValue(valueType);
                 dict.Add(keyValue, valueValue);
@@ -332,19 +336,19 @@ namespace Eliza.Core.Serialization
         {
             var length = Reader.ReadInt32();
             var data = Reader.ReadBytes(length);
+            //if (typeof(HumanStatusData) == type)
+            //{
+            //    var reader = new MessagePackReader(data);
+            //    var formatter = new HumanStatusDataFormatter();
+            //    return formatter.Deserialize(ref reader, MessagePackSerializerOptions.Standard);
+            //}
+            //if (typeof(FriendMonsterStatusData) == type)
+            //{
+            //    var reader = new MessagePackReader(data);
+            //    var formatter = new FriendMonsterStatusDataFormatter();
+            //    return formatter.Deserialize(ref reader, MessagePackSerializerOptions.Standard);
+            //}
 
-            if (typeof(HumanStatusData) == type)
-            {
-                var reader = new MessagePackReader(data);
-                var formatter = new HumanStatusDataFormatter();
-                return formatter.Deserialize(ref reader, MessagePackSerializerOptions.Standard);
-            }
-            if (typeof(FriendMonsterStatusData) == type)
-            {
-                var reader = new MessagePackReader(data);
-                var formatter = new FriendMonsterStatusDataFormatter();
-                return formatter.Deserialize(ref reader, MessagePackSerializerOptions.Standard);
-            }
             return MessagePackSerializer.Deserialize(type, data);
         }
     }

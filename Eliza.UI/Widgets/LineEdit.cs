@@ -22,10 +22,46 @@ namespace Eliza.UI.Widgets
             Setup();
         }
 
+        public LineEdit(string text) : base(text)
+        {
+            Items.Add(textBox);
+        }
+
+        public void ChangeReferenceValue(Ref<char[]> value)
+        {
+            if (value != null)
+            {
+                if (value.Value != null)
+                {
+                    _value = value;
+                    _valueType = value.Value.GetType();
+                    SetValue();
+                }
+            }
+        }
+
+        public void ChangeReferenceValue(Ref<string> value)
+        {
+            if (value != null)
+            {
+                if (value.Value != null)
+                {
+                    _value = value;
+                    _valueType = value.Value.GetType();
+                    SetValue();
+                }
+            }
+        }
+
         private void Setup()
         {
             Items.Add(textBox);
+            textBox.TextChanged += LineEdit_TextChanged;
+            SetValue();
+        }
 
+        private void SetValue()
+        {
             if (_valueType == typeof(char[]))
             {
                 textBox.Text = Encoding.UTF8.GetString(
@@ -36,8 +72,6 @@ namespace Eliza.UI.Widgets
             {
                 textBox.Text = ((Ref<string>)_value).Value;
             }
-
-            textBox.TextChanged += LineEdit_TextChanged;
         }
 
         private void LineEdit_TextChanged(object sender, EventArgs e)

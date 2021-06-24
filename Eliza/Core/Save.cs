@@ -56,9 +56,13 @@ namespace Eliza.Core
                 var pos = deserializer.BaseStream.Position;
                 var reader = deserializer.Reader;
 
-                save.saveData.Unmapped = reader.ReadBytes((int)(new FileInfo(path).Length - (pos)));
+                save.saveData.Unmapped = reader.ReadBytes((int)(new FileInfo(path).Length - (pos + 0x10)));
 
-                //Console.Write(v2.x);//Show 15
+                save.Footer = new Model.SaveData.SaveDataFooter();
+                save.Footer.BodyLength = reader.ReadInt32(); // header + body - (footer + unmapped)
+                save.Footer.Length = reader.ReadInt32();    // everything - footer
+                save.Footer.Sum = reader.ReadUInt32();
+                save.Footer.Blank = reader.ReadInt32();
 
                 //using (var test = new FileStream("test", FileMode.Create, FileAccess.Write))
                 //{
@@ -69,24 +73,61 @@ namespace Eliza.Core
             };
         }
 
+        //It look likes unmapped is just some random padding to get it aligned to 256
         public static void Write(string path, Model.Save save)
         {
             using (var fs = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
             {
+                //var serializer = new BinarySerializer(fs);
+                //serializer.Serialize(save);
+                //var writer = serializer.Writer;
+
+                //fs.SetLength((fs.Position + 0xFF) & ~0xFF);
+                //var dataSize = fs.Length;
+
+                ////Read Header to gen sum
+                //fs.Seek(0x0, SeekOrigin.Begin);
+                //byte[] header = new byte[0x20];
+                //fs.Read(header, 0, header.Length);
+
+                //byte[] data = new byte[dataSize];
+                //fs.Read(data, 0, data.Length);
+
+                ////var encryptedData = Encrypt(data);
+
+                ////fs.Seek(0x20, SeekOrigin.Begin);
+                ////fs.Write(encryptedData);
+
+                //var combinedData = new List<byte>();
+                //combinedData.AddRange(header);
+                //combinedData.AddRange(data);
+                ////combinedData.AddRange(encryptedData);
+                //var checksum = Checksum(combinedData.ToArray());
+
+                //writer.Write(combinedData.Count - (0x10 + save.saveData.Unmapped.Length));
+                //writer.Write(combinedData.Count);
+                //writer.Write(checksum);
+                //writer.Write(save.Footer.Blank);
+
+
                 var serializer = new BinarySerializer(fs);
                 serializer.Serialize(save);
                 var writer = serializer.Writer;
-                writer.Write(save.saveData.Unmapped);
 
-                fs.Seek(0x20, SeekOrigin.Begin);
-                byte[] data = new byte[new FileInfo(path).Length - (0x20 + 0x10)];
+                fs.SetLength((fs.Position + 0xFF) & ~0xFF);
+                var dataSize = fs.Length;
+
+                //Read Header to gen sum
+                fs.Seek(0x0, SeekOrigin.Begin);
+                byte[] header = new byte[0x20];
+                fs.Read(header, 0, header.Length);
+
+                byte[] data = new byte[dataSize];
                 fs.Read(data, 0, data.Length);
 
                 var encryptedData = Encrypt(data);
 
-                fs.Seek(0x0, SeekOrigin.Begin);
-                byte[] header = new byte[0x20];
-                fs.Read(header, 0, header.Length);
+                fs.Seek(0x20, SeekOrigin.Begin);
                 fs.Write(encryptedData);
 
                 var combinedData = new List<byte>();
@@ -94,8 +135,10 @@ namespace Eliza.Core
                 combinedData.AddRange(encryptedData);
                 var checksum = Checksum(combinedData.ToArray());
 
-                fs.Seek(0x8, SeekOrigin.Current);
+                writer.Write(combinedData.Count - (0x10 + save.saveData.Unmapped.Length));
+                writer.Write(combinedData.Count);
                 writer.Write(checksum);
+                writer.Write(save.Footer.Blank);
             }
         }
 
@@ -111,7 +154,6 @@ namespace Eliza.Core
 
         static void Decrypt(MemoryStream ms)
         {
-
             var pos = ms.Seek(0x20, SeekOrigin.Begin);
             byte[] encryptedData = new byte[ms.Length - (32 + 16)];
             ms.Read(encryptedData, 0, encryptedData.Length);

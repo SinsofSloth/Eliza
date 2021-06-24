@@ -12,7 +12,10 @@ namespace Eliza.UI.Forms
             var header = save.header;
             var stackLayout = new VBox();
 
-            var uid = new SpinBox(new Ref<ulong>(() => header.uid, v => { header.uid = v; }), "UID");
+            //Until Eto changes Value to decimal...
+            //var uid = new SpinBox(new Ref<ulong>(() => header.uid, v => { header.uid = v; }), "UID");
+            var uid = new SpinBox("UID");
+            uid.numericStepper.Enabled = false;
             var version = new SpinBox(new Ref<uint>(() => header.version, v => { header.version = v; }), "Version");
 
             var project = new LineEdit(new Ref<char[]>(() => header.project, v => { header.project = v; }), "Project");

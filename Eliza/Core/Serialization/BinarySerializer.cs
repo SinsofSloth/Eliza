@@ -1,6 +1,7 @@
 ﻿using Eliza.Model;
 using MessagePack;
 using System;
+using System.Buffers;
 using System.Collections;
 using System.IO;
 using System.Reflection;
@@ -44,6 +45,10 @@ namespace Eliza.Core.Serialization
             {
                 WriteSaveFlagStorage((SaveFlagStorage)value);
             }
+            else if (IsDictionary(type))
+            {
+                WriteDictionary((IDictionary)value);
+            }
             else
             {
                 WriteObject(value);
@@ -71,23 +76,10 @@ namespace Eliza.Core.Serialization
             }
         }
         
-        private void WriteList(IList list, TypeCode lengthType = TypeCode.Int32, int length = 0)
+        private void WriteList(IList list, TypeCode lengthType = TypeCode.Int32, int length = 0, int max = 0, bool isMessagePackList = false)
         {
-            if (length != 0)
+            if (length == 0)
             {
-                foreach (object value in list)
-                {
-                    WriteValue(value);
-                }
-            }
-            else
-            {
-                //Type type = list.GetType();
-
-                //type = type.IsArray
-                //    ? type.GetElementType()
-                //    : type.GetGenericArguments()[0];
-
                 switch (lengthType)
                 {
                     case TypeCode.Byte: Writer.Write((byte)list.Count); break;
@@ -100,13 +92,51 @@ namespace Eliza.Core.Serialization
                     case TypeCode.Int32: Writer.Write((int)list.Count); break;
                     case TypeCode.Int64: Writer.Write((long)list.Count); break;
                 }
+            }
 
-                foreach (object value in list)
+            foreach (object value in list)
+            {
+                if (isMessagePackList)
+                {
+                    WriteMessagePackObject(value);
+                }
+                else
                 {
                     WriteValue(value);
                 }
             }
+            ////For serializing, this will be the same as if it was equ to 0
+            //if (max != 0)
+            //{
+            //    foreach (object value in list)
+            //    {
+            //        This shouldn't be typically used, but I'll still add
+            //        if (isMessagePackList)
+            //        {
+            //            WriteMessagePackObject(value);
+            //        }
+            //        else
+            //        {
+            //            WriteValue(value);
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    foreach (object value in list)
+            //    {
+            //        if (isMessagePackList)
+            //        {
+            //            WriteMessagePackObject(value);
+            //        }
+            //        else
+            //        {
+            //            WriteValue(value);
+            //        }
+            //    }
+            //}
         }
+
         private void WriteString(string value, int max = 0)
         {
             var data = Encoding.Unicode.GetBytes(value);
@@ -117,7 +147,7 @@ namespace Eliza.Core.Serialization
                 {
                     if (index < data.Length)
                     {
-                        Writer.Write(data);
+                        Writer.Write(data[index]);
                     }
                     else
                     {
@@ -127,16 +157,36 @@ namespace Eliza.Core.Serialization
             }
             else
             {
+                // This assumes everything else adds 0 to the end. Might need another attribute
                 for (int index = 0; index < data.Length; index++)
                 {
                     Writer.Write(data[index]);
+                    Writer.Write((byte)0x0);
                 }
+                Writer.Write((byte)0x0);
+                Writer.Write((byte)0x0);
+                //for (int index = 0; index < data.Length; index++)
+                //{
+                //    Writer.Write(data[index]);
+                //}
             }
+            return;
         }
         private void WriteSaveFlagStorage(SaveFlagStorage saveFlagStorage)
         {
             Writer.Write(saveFlagStorage.Length);
             Writer.Write(saveFlagStorage.Data);
+        }
+
+        private void WriteDictionary(IDictionary dictionary)
+        {
+            Writer.Write(dictionary.Count);
+
+            foreach (DictionaryEntry item in dictionary)
+            {
+                WriteValue(item.Key);
+                WriteValue(item.Value);
+            }
         }
 
         private void WriteObject(object objectValue)
@@ -162,6 +212,23 @@ namespace Eliza.Core.Serialization
 
                     Type fieldType = info.FieldType;
 
+                    var messagePackListAttribute = (MessagePackListAttribute)info.GetCustomAttribute(typeof(MessagePackListAttribute));
+                    if (messagePackListAttribute != null)
+                    {
+                        if (IsList(fieldType))
+                        {
+                            WriteList((IList)fieldValue, isMessagePackList: true);
+                            continue;
+                        }
+                    }
+
+                    var messagePackRawAttribute = (MessagePackRawAttribute)info.GetCustomAttribute(typeof(MessagePackRawAttribute));
+                    if (messagePackRawAttribute != null)
+                    {
+                        WriteMessagePackObject(fieldValue);
+                        continue;
+                    }
+
                     var lengthAttribute = (LengthAttribute)info.GetCustomAttribute(typeof(LengthAttribute));
                     if (lengthAttribute != null)
                     {
@@ -170,10 +237,12 @@ namespace Eliza.Core.Serialization
                             if (IsList(fieldType))
                             {
                                 WriteList((IList)fieldValue, length: lengthAttribute.Size);
+                                continue;
                             }
                             else if (fieldType == typeof(string))
                             {
                                 WriteString((string)fieldValue, lengthAttribute.Size);
+                                continue;
                             }
                         }
                         else if (lengthAttribute.Type != TypeCode.Empty)
@@ -181,29 +250,28 @@ namespace Eliza.Core.Serialization
                             if (IsList(fieldType))
                             {
                                 WriteList((IList)fieldValue, lengthType: lengthAttribute.Type);
+                                continue;
                             }
                             else if (fieldType == typeof(string))
                             {
                                 //Not supported for strings ATM
                             }
                         }
-                        else if (lengthAttribute.Type != TypeCode.Empty)
+                        else if (lengthAttribute.Max != 0)
                         {
                             if (IsList(fieldType))
                             {
-                                //Not supported 
-                                
+                                WriteList((IList)fieldValue, max: lengthAttribute.Max);
+                                continue;
                             }
                             else if (fieldType == typeof(string))
                             {
                                 WriteString((string)fieldValue, max: lengthAttribute.Max);
+                                continue;
                             }
                         }
                     }
-                    else
-                    {
-                        WriteValue(fieldValue);
-                    }
+                    WriteValue(fieldValue);
                 }
             }
 
@@ -211,8 +279,9 @@ namespace Eliza.Core.Serialization
 
         private void WriteMessagePackObject(object value)
         {
-            //Not sure if this will put the count
-            MessagePackSerializer.Serialize(value);
+            var bytes = MessagePackSerializer.Serialize(value);
+            Writer.Write(bytes.Length);
+            Writer.Write(bytes);
         }
     }
 }
